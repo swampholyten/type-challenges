@@ -1,13 +1,19 @@
 import type { Equal, Expect } from "@/utils";
 
+interface Todo {
+  title: string;
+  description: string;
+  completed: boolean;
+}
+
 /* _____________ Your Code Here _____________ */
-type MyOmit<T, K extends keyof T> = {
-  [P in keyof T as P extends K ? never : P]: T[P];
+type MyPick<T, K extends keyof T> = {
+  [Key in K]: T[Key];
 };
 /* _____________ Test Cases _____________ */
 type cases = [
-  Expect<Equal<Expected1, MyOmit<Todo, "description">>>,
-  Expect<Equal<Expected2, MyOmit<Todo, "description" | "completed">>>
+  Expect<Equal<Expected1, MyPick<Todo, "title">>>,
+  Expect<Equal<Expected2, MyPick<Todo, "title" | "completed">>>
 ];
 interface Todo {
   title: string;
@@ -16,8 +22,8 @@ interface Todo {
 }
 interface Expected1 {
   title: string;
-  completed: boolean;
 }
 interface Expected2 {
   title: string;
+  completed: boolean;
 }
